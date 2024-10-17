@@ -57,8 +57,59 @@
                     <th scope="col">Correo</th>
                     <th scope="col">Fecha de Registro</th>
                     <th scope="col">Perfil</th>
-                    <th scope="col" colspan="2">&nbsp;</th>
+                    <th scope="col" colspan="2">
+                       <!-- Button insert -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#insert">
+                      <i class="fa-solid fa-user"></i>
+                        </button>
+                    </th>
                   </tr>
+
+                    <!-- Modal Insert-->
+                    <div class="modal fade" id="insert" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Nuevo Usuario</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <form action="/iUsuario" method="post">
+                          <div class="modal-body">
+                            <div class="mb-3">
+                              <label for="exampleInputText" class="form-label">Email address</label>
+                              <input type="text" name="nombre" class="form-control" id="exampleInputText" aria-describedby="emailHelp">
+                              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="exampleInputText" class="form-label">Email address</label>
+                              <input type="text" name="nombre" class="form-control" id="exampleInputText" aria-describedby="emailHelp">
+                              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            </div>
+                            <div class="mb-3">
+                              <label for="exampleInputPassword1" class="form-label">Perfil</label>
+                              <select name="perfil" class="form-select form-select-lg mb-3" aria-label="Large select example">
+                                <option selected>Elije un Perfil</option>
+                                <option value="A">Administrador</option>
+                                <option value="U">Usuario Final</option>
+                              </select>
+                              
+                              <select class="form-select form-select-sm" aria-label="Small select example">
+                                <option selected>Open this select menu</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                            </div>
+
+                          </div><!--Modal Body-->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Registrar Usuario</button>
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>
                 </thead>
                 <tbody>
                     {% for u in usuarios %}
