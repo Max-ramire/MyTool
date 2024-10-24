@@ -5,7 +5,7 @@ class Config:
 class DevelopmentConfig(Config):
     MSQL_HOST       = 'localhost'
     MYSQL_USER      = 'root'
-    MSQL_PASSWORD   = ''
+    MSQL_PASSWORD   = 'myql'
     MYSQL_DB        ='mytools'
 
 config = {

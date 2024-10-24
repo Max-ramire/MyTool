@@ -1,4 +1,6 @@
 from flask import Flask,render_template,url_for,request,redirect
+from flask_mysqldb import MySQL
+from flask_login import LoginManager, login_user, logout_user
 from werkzeug.security import generate_password_hash
 import datetime 
 from config import config
@@ -24,8 +26,11 @@ def signup():
         correo = request.form['correo']
         clave = request.form['clave']
         claveCifrada = generate_password_hash(clave)
-        fechareg = datetime.datetime()
+        fechareg = datetime.now()
         regUsuario = db.connection.cursor()
+        regUsuario.execute("INSERT INTO usuario(nombre,correo,clave,fechareg,perfil)VALUES(nombre,correo,claveCifrada,fechareg)")
+        db.connection.commit()
+        return render_template("home.html")
     return render_template('signup.html')
 
 @mytoolApp.route('/signin')
