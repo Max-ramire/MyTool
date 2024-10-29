@@ -28,7 +28,7 @@ def signup():
         claveCifrada = generate_password_hash(clave)
         fechareg = datetime.now()
         regUsuario = db.connection.cursor()
-        regUsuario.execute("INSERT INTO usuario(nombre,correo,clave,fechareg,perfil)VALUES(nombre,correo,claveCifrada,fechareg)")
+        regUsuario.execute("INSERT INTO usuario(nombre,correo,clave,fechareg) VALUES (%s,%s,%s,%s)",(nombre,correo,claveCifrada,fechareg)")
         db.connection.commit()
         return render_template("home.html")
     return render_template('signup.html')
@@ -39,5 +39,6 @@ def signin():
 
 
 if __name__ == '__main__' :
+    mytoolApp.config.from_object(config['development'])
     mytoolApp.run(debug=True,port=3300)
 00
