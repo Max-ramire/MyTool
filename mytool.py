@@ -1,4 +1,4 @@
-from flask import Flask,render_template,url_for,request,redirect,Flash
+from flask import Flask,render_template,url_for,request,redirect,flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user
 from werkzeug.security import generate_password_hash
@@ -35,25 +35,24 @@ def signup():
 
 @mytoolApp.route('/signin',methods = ['GET','POST'])
 def signin():
-if request.method == "POST":
-    usuario = User(0,None,request.form['correo'],request.form['clave'],)
-    usuarioAutenticado = ModelUser.signin(db,usuario)
-    if usuarioAutentiado is None:
-        if usuarioAutenticado.clave:
-            login_user(usuarioAutenticado)
-            if usuarioAutenticado.perfil == 'A':
-                return render_template('admin.html') 
+    if request.method == "POST":
+        usuario = User(0,None,request.form['correo'],request.form['clave'],)
+        usuarioAutenticado = ModelUser.signin(db,usuario)
+        if usuarioAutenticado is None:
+            if usuarioAutenticado.clave:
+                login_user(usuarioAutenticado)
+                if usuarioAutenticado.perfil == 'A':
+                    return render_template('admin.html') 
+                else:
+                    return render_template('user.html')
             else:
-                return render_template('user.html')
+                    flash('Contraseña Incorrecta')
+                    return redirect(request.url)
         else:
-                flash('Contraseña Incorrecta')
-                return redirect(request.url)
-    else:
-        Flash('Usuario Inexistente')
-        return redirect(request.url)
-    return render_template('signin.html')
-
-@creatorApp.route('/signout',methods = ['GET','POST'])
+            Flash('Usuario Inexistente')
+            return redirect(request.url)
+        return render_template('signin.html')
+@mytoolApp.route('/signout',methods = ['GET','POST'])
 def signout():
     logout_user()
     return render_template('home.html')
