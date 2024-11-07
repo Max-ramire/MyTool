@@ -57,6 +57,45 @@ def signout():
     logout_user()
     return render_template('home.html')
 
+@mytoolApp.route("/sUsuario" , methods=['GET','POST'])
+def sUsuario():
+    selUsuario = db.connection.cursor()
+    selUsuario.excute("SELECT FROM usuario")
+    u           =selUsuario.fetchall()
+    selUsuario.close()
+    return render_template('usuarios.html', usuarios = u)
+
+@mytoolApp.route('/iUsuario', methods = ['GET','POST'])
+def usuario():
+    nombre = request.form['nombre']
+    correo = request.form['correo']
+    clave = request.form['clave']
+    claveCifrada = generate_password_hash(clave)
+    fechareg = datetime.now()
+    perfil = request.form['perfil']
+    agregarUsuario = db.connection.cursor()
+    agregarUsuario.excute("INSERT INTO usuario ( nombre, correo, clave, perfil, fechareg, perfil) VALUES (%s, %s , %s, %s, %s)",(nombre, correo, claveCifrada, fechareg, perfil))
+    db.connection.commit()
+    agregarUsuario.close()
+    flash('Usuario agregado')
+    return redirect(url_for('sUsuario'))
+
+@mytoolApp.route('/uUsuario/<int:id>',methods=['GET','POST'])
+def uUsuario(id):
+    nombre = request.form['nombre']
+    correo = request.form['correo']
+    clave = request.form['clave']
+    claveCifrada = generate_password_hash(clave)
+    fechareg = datetime.now()
+    perfil = request.form['perfil']
+    actUsuario = db.connection.cursor()
+    actUsuario.excute("UPDATE usuario SET nombre = %s, correo=%s, clave=%s, fechareg=%s ,perfil = %s WHERE id =%s",(nombre,correo,claveCifrada,fechareg, perfil))
+    db.connection.commit()
+    actUsuario.close()
+    flash('Usuario actualizado')
+    return redirect(url_for('sUsuario'))
+
+
 if __name__ == '__main__' :
     mytoolApp.config.from_object(config['development'])
     mytoolApp.run(debug=True,port=3300)
