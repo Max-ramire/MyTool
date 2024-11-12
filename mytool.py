@@ -9,6 +9,8 @@ from models.entities.User import User
 
 mytoolApp = Flask(__name__)
 db        =MySQL(mytoolApp)
+#pythonanywhere
+mytoolApp.config.from_object(config['development'])
 adminSession = LoginManager (mytoolApp)
 
 @adminSession.user_loader
@@ -17,7 +19,7 @@ def agregarUsuario(ID):
 
 @mytoolApp.route('/')
 def home():
-    return render_template('usuarios.html')
+    return render_template('home.html')
 
 @mytoolApp.route('/signup',methods=['GET','POST'])
 def signup():
@@ -95,8 +97,8 @@ def uUsuario(id):
     flash('Usuario actualizado')
     return redirect(url_for('sUsuario'))
 
-
+'''
 if __name__ == '__main__' :
     mytoolApp.config.from_object(config['development'])
     mytoolApp.run(debug=True,port=3300)
-00
+'''

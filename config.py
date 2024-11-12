@@ -3,9 +3,16 @@ class Config:
     DEBUG       = True
 
 class DevelopmentConfig(Config):
-    MSQL_HOST       = 'localhost'
+    #localhost
+   ''' MYSQL_HOST       = 'localhost'
     MYSQL_USER      = 'root'
     MSQL_PASSWORD   = 'myql'
+    MYSQL_DB        ='mytools' '''
+    
+    #pythonanywhere
+    MYSQL_HOST       = 'mytool.mysql.pythonanywhere-services.com'
+    MYSQL_USER      = 'mytool'
+    MSQL_PASSWORD   = 'juan123loZ'
     MYSQL_DB        ='mytools'
 
 config = {

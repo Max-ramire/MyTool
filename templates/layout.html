@@ -9,9 +9,10 @@
 </head>
 <body>
     
-      {% block contenido %}{% endblock %}
+      {% block contenido %}
     <script src="{{url_for('static',filename='/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{url_for('static',filename='/js/all.min.js')}}"></script>
     <script src="{{url_for('static',filename='/js/scrollreveal.min.js')}}"></script>
 </body>
 </html>
+{% endblock %}
