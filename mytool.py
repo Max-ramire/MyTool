@@ -1,6 +1,7 @@
 from flask import Flask,render_template,url_for,request,redirect,flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user
+from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash
 import datetime 
 from config import config
@@ -8,9 +9,10 @@ from models.ModelUser import ModelUser
 from models.entities.User import User
 
 mytoolApp = Flask(__name__)
-db        =MySQL(mytoolApp)
 #pythonanywhere
 mytoolApp.config.from_object(config['development'])
+#mytoolApp.config.from_object(config['mail'])
+db        =MySQL(mytoolApp)
 adminSession = LoginManager (mytoolApp)
 
 @adminSession.user_loader
@@ -51,7 +53,7 @@ def signin():
                     flash('Contraseña Incorrecta')
                     return redirect(request.url)
         else:
-            Flash('Usuario Inexistente')
+            Flask('Usuario Inexistente')
             return redirect(request.url)
         return render_template('signin.html')
 @mytoolApp.route('/signout',methods = ['GET','POST'])
@@ -97,8 +99,15 @@ def uUsuario(id):
     flash('Usuario actualizado')
     return redirect(url_for('sUsuario'))
 
-'''
+@mytoolApp.route('/uUsuario/<int:id>',methods=['GET','POST'])
+def uUsuario(id):
+    delUsuario = db.connection.cursor()
+    delUsuario.excute("DELETE FROM usuario WHERE id = %s", (id,))
+    db.connection.commit()
+    delUsuario.close
+    flash("Usuario eliminado")
+    return redirect(url_for('sUsuario'))
+
 if __name__ == '__main__' :
     mytoolApp.config.from_object(config['development'])
-    mytoolApp.run(debug=True,port=3300)
-'''
+mytoolApp.run(debug=True,port=3300)
