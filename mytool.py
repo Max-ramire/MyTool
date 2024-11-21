@@ -99,8 +99,8 @@ def uUsuario(id):
     flash('Usuario actualizado')
     return redirect(url_for('sUsuario'))
 
-@mytoolApp.route('/uUsuario/<int:id>',methods=['GET','POST'])
-def uUsuario(id):
+@mytoolApp.route('/dUsuario/<int:id>',methods=['GET','POST'])
+def dUsuario(id):
     delUsuario = db.connection.cursor()
     delUsuario.excute("DELETE FROM usuario WHERE id = %s", (id,))
     db.connection.commit()
