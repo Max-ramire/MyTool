@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash
-import datetime 
+from datetime import datetime
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
@@ -13,6 +13,7 @@ mytoolApp = Flask(__name__)
 mytoolApp.config.from_object(config['development'])
 #mytoolApp.config.from_object(config['mail'])
 db        =MySQL(mytoolApp)
+mail      =  Mail(mytoolApp)
 adminSession = LoginManager (mytoolApp)
 
 @adminSession.user_loader
@@ -34,6 +35,9 @@ def signup():
         regUsuario = db.connection.cursor()
         regUsuario.execute("INSERT INTO usuario(nombre,correo,clave,fechareg) VALUES (%s,%s,%s,%s)",(nombre,correo,claveCifrada,fechareg))
         db.connection.commit()
+        msg = Message(subject='Bienvenidos a mytools',recipients=[correo])
+        msg.html = render_template('mail.html',nombre=nombre)
+        mail.send(msg)
         return render_template("home.html")
     return render_template('signup.html')
 
@@ -109,5 +113,5 @@ def dUsuario(id):
     return redirect(url_for('sUsuario'))
 
 if __name__ == '__main__' :
-    mytoolApp.config.from_object(config['development'])
+        mytoolApp.config.from_object(config['development'])
 mytoolApp.run(debug=True,port=3300)
