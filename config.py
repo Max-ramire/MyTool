@@ -26,5 +26,5 @@ class ConfigMail(Config):
     MAIL_ASCII_ATTACHEMENT = True
 config = {
     'development': DevelopmentConfig,
-    'mail'       :MailConfig   
+    'mail'       :ConfigMail 
 }

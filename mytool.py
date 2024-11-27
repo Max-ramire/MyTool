@@ -3,7 +3,7 @@ from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user
 from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash
-from datetime import datetime
+import datetime
 from config import config
 from models.ModelUser import ModelUser
 from models.entities.User import User
